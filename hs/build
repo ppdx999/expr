@@ -4,7 +4,7 @@ thids=$(dirname $(readlink -f $0))
 cd $thids
 mkdir -p bin
 cabal build all
-cmd="calc"
+cmd="expr"
 [ -f bin/$cmd ] && rm bin/$cmd
 find dist-newstyle/build -type f -name $cmd |
 xargs -I {} cp {} bin/
