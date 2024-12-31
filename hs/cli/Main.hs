@@ -1,7 +1,6 @@
 module Main where
 
-import qualified Lib (add)
+import qualified Lib (mainProc)
 
 main :: IO ()
-main = do
-  print $ Lib.add 1 2
+main = Lib.mainProc

@@ -1,0 +1,6 @@
+#!/bin/sh
+
+thids=$(dirname $(readlink -f $0))
+cd $thids
+./build
+./bin/expr
