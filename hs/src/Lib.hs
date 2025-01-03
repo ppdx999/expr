@@ -14,15 +14,21 @@ eval m fs = foldl (\x f -> f x) <$> m <*> fs
 apply :: (a -> a -> a) -> Parser a -> Parser (a -> a)
 apply f m = flip f <$> m
 
+-- expr ::= term { ('+' term) | ('-' term) }
 expr :: Parser Int
 expr = eval term $ many $
         char '+' *> apply (+) term
     <|> char '-' *> apply (-) term
 
+-- term ::= factor { ('*' factor) | ('/' factor) }
 term :: Parser Int
-term = eval number $ many $
-        char '*' *> apply (*) number
-    <|> char '/' *> apply div number
+term = eval factor $ many $
+        char '*' *> apply (*) factor
+    <|> char '/' *> apply div factor
+
+-- factor ::= number | '(' expr ')'
+factor :: Parser Int
+factor = number <|> between (char '(') (char ')') expr
 
 number :: Parser Int
 number = read <$> many1 digit
