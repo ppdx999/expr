@@ -1,15 +1,12 @@
 module Lib
-( mainProc
+( program
 ) where
 
 import Text.Parsec
 import Text.Parsec.String (Parser)
 
-mainProc :: IO ()
-mainProc = do
-  print $ parse number "" "123"
-  print $ parse expr "" "123+456"
-
+program :: String -> Either ParseError Int
+program = parse expr ""
 
 eval :: Parser a -> Parser [a -> a] -> Parser a
 eval m fs = foldl (\x f -> f x) <$> m <*> fs
